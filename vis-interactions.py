@@ -97,7 +97,7 @@ casos = st.multiselect(
 
 for caso in casos:
     st.write(f"Top 5 casos de {caso}")
-    for i in range(5):
+    for i in range([5,len(eval(caso))][len(eval(caso))<5]):
         st.write(f"{caso} {i+1} (quantidade: {eval(caso).eval(caso)[i]}):")
         st.write(f"{eval(caso)['index'][i]}")
         st.write("\n")
