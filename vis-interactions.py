@@ -54,6 +54,7 @@ def limpa(x):
 
 st.write("Análise de interações chatbot")
 st.write("Autor: Lucas Perin Manchine")
+st.sidebar.title("Filtros")
 df = read_csv()
 pattern = compila_string()
 df_tratado = trata_dataframe(df[:])
@@ -61,12 +62,39 @@ origem = get_origem(df_tratado)
 pergunta = get_pergunta(df_tratado)
 resposta = get_resposta(df_tratado)
 redirecionamento = get_redirect(df_tratado)
+origens = st.sidebar.multiselect(
+    label="Origens",
+    options=origem['index'].unique()
+)
+redirects = st.sidebar.multiselect(
+    label="Redirecionamentos",
+    options=redirecionamento['index'].unique()
+)
+
+if origens or redirects:
+    if origens and redirects:
+        df_tratado = trata_dataframe(
+            df[df_tratado.origem.isin(origens) & df_tratado.redirecionamento.isin(redirects)][:]
+        )
+    elif origens:
+        df_tratado = trata_dataframe(
+            df[df_tratado.origem.isin(origens)][:]
+        )
+    else:
+        df_tratado = trata_dataframe(
+            df[df_tratado.redirecionamento.isin(redirects)][:]
+        )
+    origem = get_origem(df_tratado)
+    pergunta = get_pergunta(df_tratado)
+    resposta = get_resposta(df_tratado)
+    redirecionamento = get_redirect(df_tratado)
 
 lista_casos = ["origem","pergunta","resposta","redirecionamento"]
 casos = st.multiselect(
     label="Casos a serem analisados",
     options=lista_casos
 )
+
 for caso in casos:
     st.write(f"Top 5 casos de {caso}")
     for i in range(5):
