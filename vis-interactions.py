@@ -72,14 +72,15 @@ redirects = st.sidebar.multiselect(
 )
 
 if origens or redirects:
-    if origens and redirects:
-        df_tratado = trata_dataframe(
-            df[df_tratado.origem.isin(origens) & df_tratado.redirecionamento.isin(redirects)][:]
-        )
-    elif origens:
-        df_tratado = trata_dataframe(
-            df[df_tratado.origem.isin(origens)][:]
-        )
+    if origens:
+        if redirects:
+            df_tratado = trata_dataframe(
+                df[df_tratado.origem.isin(origens) & df_tratado.redirecionamento.isin(redirects)][:]
+            )
+        else:
+            df_tratado = trata_dataframe(
+                df[df_tratado.origem.isin(origens)][:]
+            )
     else:
         df_tratado = trata_dataframe(
             df[df_tratado.redirecionamento.isin(redirects)][:]
@@ -98,6 +99,8 @@ casos = st.multiselect(
 for caso in casos:
     st.write(f"Top 5 casos de {caso}")
     for i in range([5,len(eval(caso))][len(eval(caso))<5]):
+        if len(eval(caso))<5:
+            st.write(f'Só há {len(eval(caso))}  ocorrência(s)')
         st.write(f"{caso} {i+1} (quantidade: {eval(caso).eval(caso)[i]}):")
         st.write(f"{eval(caso)['index'][i]}")
         st.write("\n")
