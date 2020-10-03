@@ -2,7 +2,7 @@
 
 ### Desafio
 
-Desafio consistia basicamente de mostrar as top 5 ocorrências em algumas posições de uma coluna de string
+Desafio consistia basicamente de mostrar as top 5 ocorrências em algumas posições de uma coluna de string, mais informações: https://github.com/perinm/desafio-take/blob/master/readme.pdf
 
 ### Resposta
 
